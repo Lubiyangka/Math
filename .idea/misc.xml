@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Black">
+    <option name="enabledOnReformat" value="true" />
     <option name="executionMode" value="BINARY" />
     <option name="pathToExecutable" value="D:\Anaconda\Scripts\black.exe" />
     <option name="sdkUUID" value="534bab37-22d4-436b-a81d-be49809e097f" />

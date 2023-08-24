@@ -4,13 +4,13 @@ import pandas as pd
 import math
 import plotly.graph_objects as go
 
-node_list = pd.read_csv('附件1.csv', encoding='gbk')
-node_code = node_list['节点编号']
-node_x = np.array(node_list['X坐标（米）'])
-node_y = np.array(node_list['Y坐标（米）'])
-node_z = np.array(node_list['Z坐标（米）'])
+node_list = pd.read_csv("附件1.csv", encoding="gbk")
+node_code = node_list["节点编号"]
+node_x = np.array(node_list["X坐标（米）"])
+node_y = np.array(node_list["Y坐标（米）"])
+node_z = np.array(node_list["Z坐标（米）"])
 
-node_r1 = np.sqrt(node_x ** 2 + node_y ** 2 + node_z ** 2)
+node_r1 = np.sqrt(node_x**2 + node_y**2 + node_z**2)
 R = np.average(node_r1)
 F = 0.466 * R
 tan_fai = 150 / ((math.sqrt(3) / 2 - 0.534) * R)
@@ -33,16 +33,25 @@ def distance(x1, y1, z1, x2, y2, z2):
 G_line = []
 for i in range(len(node_x) - 1):
     # print(i)
-    G_line.append(distance(node_x[i], node_y[i], node_z[i], node_x[i + 1], node_y[i + 1], node_z[i + 1]))
+    G_line.append(
+        distance(
+            node_x[i], node_y[i], node_z[i], node_x[i + 1], node_y[i + 1], node_z[i + 1]
+        )
+    )
 llll = []
 zzzz = []
 xxxx = []
 yyyy = []
 for xi in np.arange(-0.6, 0.6, 0.01):
     for seita in np.arange(-0.5 / tan_fai, 0.5 / tan_fai, 0.01):
-        node_r2 = (2 * F * np.cos(node_seita) + 2 * np.sqrt(
-            F ** 2 * np.cos(node_seita) ** 2 + F * (R + seita + xi) * np.sin(node_seita) ** 2)) / np.sin(
-            node_seita) ** 2
+        node_r2 = (
+            2 * F * np.cos(node_seita)
+            + 2
+            * np.sqrt(
+                F**2 * np.cos(node_seita) ** 2
+                + F * (R + seita + xi) * np.sin(node_seita) ** 2
+            )
+        ) / np.sin(node_seita) ** 2
 
         node_x2 = node_r2 * np.sin(node_seita) * np.cos(node_fai)
         node_y2 = node_r2 * np.sin(node_seita) * np.sin(node_fai)
@@ -51,7 +60,16 @@ for xi in np.arange(-0.6, 0.6, 0.01):
         G_line2 = []
 
         for i in range(len(node_x2) - 1):
-            G_line2.append(distance(node_x2[i], node_y2[i], node_z2[i], node_x2[i + 1], node_y2[i + 1], node_z2[i + 1]))
+            G_line2.append(
+                distance(
+                    node_x2[i],
+                    node_y2[i],
+                    node_z2[i],
+                    node_x2[i + 1],
+                    node_y2[i + 1],
+                    node_z2[i + 1],
+                )
+            )
         # print(G_line2)
         delta_r = np.absolute(node_r2 - node_r1)
         delta = []
@@ -59,7 +77,12 @@ for xi in np.arange(-0.6, 0.6, 0.01):
         SUM = 0
         lam = np.array(G_line2) / np.array(G_line) - 1
         for i in range(len(node_x) - 1):
-            if delta_r[i] <= 0.4 and delta_r[i] >= 0.2 and lam[i] <= 0.0018 and lam[i] > 0.0004:
+            if (
+                delta_r[i] <= 0.4
+                and delta_r[i] >= 0.2
+                and lam[i] <= 0.0018
+                and lam[i] > 0.0004
+            ):
                 delta.append(delta_r[i])
                 lamba.append(lam[i])
                 xxxx.append(xi)
