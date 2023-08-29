@@ -7,31 +7,21 @@ num_objectives = 2
 # 定义变量
 variables = cp.Variable((num_variables,))
 
-
 # 定义目标函数
 objective_functions = [
-    cp.sum(cp.multiply([8, 0], variables)),  # 甲种产品的利润
-    cp.sum(cp.multiply([0, 10], variables))  # 乙种产品的利润
+    0.6 * variables[0] + 0.7 * variables[1],  # 目标函数1：甲种产品的利润
+    -(0.001 * variables[0]**2 + 0.002 * variables[1]**2 )  # 目标函数2：负向化成本
 ]
 
 # 定义约束条件
 constraints = [
-    cp.multiply(4 * variables[0] + 5 * variables[1], 1) <= 2000,  # 原材料消耗约束
-    cp.multiply(3 * variables[0] + 10 * variables[1], 1) <= 3000,  # 设备占用约束
-]
-
-# 定义软限制惩罚项
-penalty = 1000  # 惩罚项权重
-soft_constraints = [
-    cp.pos(200-variables[0]),  # >=0
-    cp.pos(variables[1]-250),
-    cp.pos(9*variables[0]+4*variables[1]-3600),
-   cp.abs(70*variables[0]+120*variables[1]-50000)
+    variables[0] + variables[1] == 1000,  # 原材料消耗约束
+    variables[0] >= variables[1]  # 设备占用约束
 ]
 
 # 定义目标规划问题
 problem = cp.Problem(
-    cp.Maximize(cp.sum(objective_functions) - penalty * cp.sum(soft_constraints)),
+    cp.Maximize(cp.sum(objective_functions)),
     constraints
 )
 
