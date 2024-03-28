@@ -30,3 +30,6 @@ ax.set_xlabel('X')
 ax.view_init(180, 0)
 ax.mouse_init()
 plt.show()
+
+for i in range(5):
+  print(i)
