@@ -9,7 +9,7 @@ node_y = np.array(node_list['Y坐标（米）'])
 node_z = np.array(node_list['Z坐标（米）'])
 
 actuator_list = pd.read_csv('附件2.csv', encoding='gbk')
-actuator_code = actuator_list['对应主索节点编号']
+actuator_codegit = actuator_list['对应主索节点编号']
 actuator_x_up = np.array(actuator_list['基准态时上端点X坐标（米）'])
 actuator_y_up = np.array(actuator_list['基准态时上端点Y坐标（米）'])
 actuator_z_up = np.array(actuator_list['基准态时上端点Z坐标（米）'])
